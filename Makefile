@@ -1,4 +1,4 @@
-.PHONY: all create-sysroot build-kernel
+.PHONY: all create-sysroot build-kernel docs docs-kernel
 
 ifndef CC_PREFIX
 IGNORE := $(error "Set CC_PREFIX as according to README.md")
@@ -9,6 +9,7 @@ ROOTDIR=$(realpath $(CURDIR))/
 SYSROOT=$(ROOTDIR)sysroot/
 SYSROOT_INCLUDE=$(SYSROOT)usr/include/
 SYSROOT_LIB=$(SYSROOT)usr/lib/
+SYSROOT_BOOT=$(SYSROOT)boot/
 export SYSROOT SYSROOT_INCLUDE SYSROOT_LIB
 
 KERNEL_ROOT=$(ROOTDIR)kernel/
@@ -42,12 +43,17 @@ all: create-sysroot build-kernel
 clean: clean-kernel
 	rm -rf sysroot
 
+docs: docs-kernel
+
 create-sysroot:
 	-mkdir $(SYSROOT)
 	-mkdir -p $(SYSROOT_INCLUDE)
 	$(MAKE) -C $(KERNEL_ROOT) install-system-headers
 	-mkdir -p $(SYSROOT_LIB)
 	-cp -L $(LIBGCC) $(SYSROOT_LIB)
+
+docs-kernel:
+	$(MAKE) -C $(KERNEL_ROOT) docs
 
 build-kernel: create-sysroot
 	$(MAKE) -C $(KERNEL_ROOT) build

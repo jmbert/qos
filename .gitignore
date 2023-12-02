@@ -1,6 +1,6 @@
 *.o
 *.d
 *.a
-**/docs/
+**/docs/docs
 *.bin
 sysroot/

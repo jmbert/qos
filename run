@@ -1,0 +1,2 @@
+#!/bin/sh
+qemu-system-i386 -no-reboot -m 2G -hda kernel/qos.boot

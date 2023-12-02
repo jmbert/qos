@@ -9,7 +9,7 @@ boot_kernel_higher: .skip 4096
 .global _start
 
 _start:
-
+    jmp _end
 _end:   
     cli; hlt
     jmp _end
